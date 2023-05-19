@@ -1,9 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\TranslationController;
 use Illuminate\Support\Facades\Route;
-
 
 
 Route::get('/', function () {
@@ -16,4 +16,5 @@ Route::group(['prefix' => 'admin','middleware' => 'admin-login'],function (){
     Route::get('/',[AdminController::class, 'index'])->name('admin.home');
     Route::get('/logout',[AdminController::class, 'logout'])->name('admin.logout');
     Route::resource('translation',TranslationController::class);
+    Route::resource('category',CategoryController::class);
 });
