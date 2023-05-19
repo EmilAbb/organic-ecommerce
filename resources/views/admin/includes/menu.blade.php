@@ -30,6 +30,16 @@
     </a>
 </li>
 
+<li class="nav-item">
+    <a href="{{route('category.index')}}"  class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p style="color: burlywood">
+          Categories
+
+        </p>
+    </a>
+</li>
+
 
 
 
