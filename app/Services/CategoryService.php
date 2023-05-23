@@ -3,10 +3,10 @@
 namespace App\Services;
 
 use App\Models\Category;
-use App\Models\Translation;
+
 use App\Repositories\CategoryRepository;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Str;
+
 
 class CategoryService
 {
@@ -17,7 +17,7 @@ class CategoryService
 
     public function index()
     {
-        return $this->repository->paginate(10);
+        return $this->repository->paginate(10,['parent.translation']);
     }
 
     public function store($request)
