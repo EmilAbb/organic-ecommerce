@@ -11,6 +11,7 @@
                     <th>id</th>
                     <th>Title</th>
                     <th>Slug</th>
+                    <th>Parent</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -22,6 +23,7 @@
                         <td>{{$model->id}}</td>
                         <td>{{$model->title}}</td>
                         <td>{{$model->slug}}</td>
+                        <td>{{$model->parent?->title ?? "Parent Category"}}</td>
 
                         <td>
                             <a class="btn btn-secondary" href="{{route('category.edit',$model->id)}}">Edit</a>
