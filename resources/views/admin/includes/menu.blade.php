@@ -40,6 +40,15 @@
     </a>
 </li>
 
+<li class="nav-item">
+    <a href="{{route('product.index')}}"  class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p style="color: burlywood">
+            Products
+
+        </p>
+    </a>
+</li>
 
 
 
