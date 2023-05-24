@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProductImageController;
 use App\Http\Controllers\Admin\TranslationController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,4 +20,7 @@ Route::group(['prefix' => 'admin','middleware' => 'admin-login'],function (){
     Route::resource('translation',TranslationController::class);
     Route::resource('category',CategoryController::class);
     Route::resource('product',ProductController::class);
+    Route::resource('product-image',ProductImageController::class)->except(['index','create','show']);
+    Route::get('product-image/{productId}',[ProductImageController::class,'index'])->name('product-image.index');
+    Route::get('product-image/create/{productId}',[ProductImageController::class,'create'])->name('product-image.create');
 });

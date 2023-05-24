@@ -1,7 +1,7 @@
 @extends('admin.layouts.admin')
 @section('content')
 
-    <a class="btn btn-primary my-3" href="{{route('product.create')}}">Add</a>
+    <a class="btn btn-primary my-3" href="{{route('product-image.create',$productId)}}">Add</a>
 
     <div class="card">
         <div class="card-body">
@@ -9,9 +9,7 @@
                 <thead>
                 <tr>
                     <th>id</th>
-                    <th>Title</th>
-                    <th>Slug</th>
-                    <th>Category</th>
+                    <th>Image</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -21,17 +19,14 @@
                 @foreach($models as $model)
                     <tr>
                         <td>{{$model->id}}</td>
-                        <td>{{$model->title}}</td>
-                        <td>{{$model->slug}}</td>
-                        <td>{{$model->category->title ?? "Parent Category"}}</td>
+                        <td><img width="100" src="{{asset('storage/'.$model->image)}}"></td>
 
-                        <td style="display: flex;justify-content: space-between">
-                            <a  class="btn btn-secondary" href="{{route('product.edit',$model->id)}}">Edit</a>
-                            <a  class="btn btn-secondary" href="{{route('product-image.index',$model->id)}}">Images</a>
+                       <td>
+                            <a class="btn btn-secondary" href="{{route('product-image.edit',$model->id)}}">Edit</a>
                         </td>
 
                         <td>
-                            <form class="delete-form" action="{{route('product.destroy',$model->id)}}" method="POST">
+                            <form class="delete-form" action="{{route('product-image.destroy',$model->id)}}" method="POST">
                                 @method('DELETE')
                                 @csrf
                                 <button class="btn btn-danger">Delete</button>
