@@ -23,4 +23,5 @@ Route::group(['prefix' => 'admin','middleware' => 'admin-login'],function (){
     Route::resource('product-image',ProductImageController::class)->except(['index','create','show']);
     Route::get('product-image/{productId}',[ProductImageController::class,'index'])->name('product-image.index');
     Route::get('product-image/create/{productId}',[ProductImageController::class,'create'])->name('product-image.create');
+    Route::post('sort-product-image',[ProductImageController::class,'sortProductImage'])->name('sort-product-image');
 });

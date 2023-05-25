@@ -10,6 +10,7 @@ use App\Models\ProductImage;
 use App\Services\CategoryService;
 use App\Services\ProductImageService;
 use App\Services\ProductService;
+use function GuzzleHttp\Promise\all;
 
 class ProductImageController extends Controller
 {
@@ -21,28 +22,28 @@ class ProductImageController extends Controller
     {
 
         $models = $this->service->index($productId);
-        return view('admin.product-image.index',compact('models','productId'));
+        return view('admin.product-image.index', compact('models', 'productId'));
     }
 
     public function create($productId)
     {
-        return view('admin.product-image.form',compact('productId'));
+        return view('admin.product-image.form', compact('productId'));
     }
 
     public function store(ProductImageRequest $request)
     {
         $this->service->store($request);
-        return redirect()->route('product-image.index',$request->product_id);
+        return redirect()->route('product-image.index', $request->product_id);
     }
 
     public function edit(ProductImage $productImage)
     {
-        return view('admin.product-image.form',['model'=>$productImage,'productId' => $productImage->product_id]);
+        return view('admin.product-image.form', ['model' => $productImage, 'productId' => $productImage->product_id]);
     }
 
-    public function update(ProductImageRequest $request , ProductImage $productImage)
+    public function update(ProductImageRequest $request, ProductImage $productImage)
     {
-        $this->service->update($request,$productImage);
+        $this->service->update($request, $productImage);
         return redirect()->back();
     }
 
@@ -50,5 +51,12 @@ class ProductImageController extends Controller
     {
         $this->service->delete($productImage);
         return redirect()->back();
+    }
+
+    public function sortProductImage()
+    {
+        parse_str(request()->sortList, $sortList);
+        $this->service->sortElements($sortList);
+
     }
 }
