@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="{{asset('_assets/plugins/fontawesome-free/css/all.min.css')}}">
     <!-- IonIcons -->
     <!-- Theme style -->
+    @yield('css')
+    <meta name="csrf" content="{{csrf_token()}}">
     <link rel="stylesheet" href="{{asset('_assets/css/adminlte.min.css')}}">
 </head>
 
@@ -68,6 +70,7 @@
 
 
 <script src="{{asset('_assets/js/custom.js')}}"></script>
+@yield('js')
 </body>
 </html>
 

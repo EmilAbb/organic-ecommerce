@@ -14,10 +14,12 @@
                     <th>Delete</th>
                 </tr>
                 </thead>
-                <tbody>
+
+
+                <tbody id="sortable">
 
                 @foreach($models as $model)
-                    <tr>
+                    <tr id="order-{{$model->id}}">
                         <td>{{$model->id}}</td>
                         <td><img width="100" src="{{asset('storage/'.$model->image)}}"></td>
 
@@ -39,4 +41,24 @@
             </table>
         </div>
     </div>
+@endsection
+
+@section('js')
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script>
+        $( function() {
+            $( "#sortable" ).sortable();
+        } );
+        $("#sortable").on('sortstop',function (event, ui){
+            $.ajax({
+                method: "post",
+                url: "{{route('sort-product-image')}}",
+                data: {
+                    sortList:$("#sortable").sortable('serialize'),
+                    _token:$('meta[name=csrf]').attr('content')
+
+                }
+            })
+        });
+    </script>
 @endsection
