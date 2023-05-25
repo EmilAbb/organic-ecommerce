@@ -20,3 +20,5 @@ Route::group(['prefix' => 'admin','middleware' => 'admin-login'],function (){
     Route::resource('category',CategoryController::class);
     Route::resource('product',ProductController::class);
 });
+
+//test
