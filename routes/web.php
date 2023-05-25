@@ -24,3 +24,5 @@ Route::group(['prefix' => 'admin','middleware' => 'admin-login'],function (){
     Route::get('product-image/{productId}',[ProductImageController::class,'index'])->name('product-image.index');
     Route::get('product-image/create/{productId}',[ProductImageController::class,'create'])->name('product-image.create');
 });
+
+//test
