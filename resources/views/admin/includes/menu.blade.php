@@ -50,6 +50,15 @@
     </a>
 </li>
 
+<li class="nav-item">
+    <a href="{{route('attribute.index')}}"  class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p style="color: burlywood">
+            Attributes
+
+        </p>
+    </a>
+</li>
 
 
 
