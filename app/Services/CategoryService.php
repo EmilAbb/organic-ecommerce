@@ -18,7 +18,7 @@ class CategoryService
 
     public function index()
     {
-        return $this->repository->paginate(10, ['parent.translation']);
+        return $this->repository->paginate(8, ['parent.translation']);
     }
 
     public function store($request)
@@ -27,7 +27,7 @@ class CategoryService
         $data = $request->all();
         $data['image'] = $this->fileUploadService->uploadFile($request->image, 'categories');
         $data['active'] = $data['active'] ?? false;
-        $attributes = $data['attributes'];
+        $attributes = $data['attributes'] ?? [];
         unset($data['attributes']);
         $model = $this->repository->save($data, new Category());
         $model->attributes()->attach($attributes);

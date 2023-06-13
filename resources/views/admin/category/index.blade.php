@@ -26,21 +26,27 @@
                         <td>{{$model->parent?->title ?? "Parent Category"}}</td>
 
                         <td>
-                            <a class="btn btn-secondary" href="{{route('category.edit',$model->id)}}">Edit</a>
+                            <a class="btn bg-yellow" href="{{route('category.edit',$model->id)}}"><i class="fa-solid fa-pen text-white"></i></a>
                         </td>
 
                         <td>
                             <form class="delete-form" action="{{route('category.destroy',$model->id)}}" method="POST">
                                 @method('DELETE')
                                 @csrf
-                                <button class="btn btn-danger">Delete</button>
+                                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
 
                             </form>
                         </td>
                     </tr>
                 @endforeach
+
+
                 </tbody>
             </table>
+
         </div>
+       <div class="container d-flex justify-content-center">
+           {{$models->links()}}
+       </div>
     </div>
 @endsection

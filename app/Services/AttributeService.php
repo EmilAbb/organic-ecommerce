@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Attribute;
+use App\Models\Category;
 use App\Repositories\AttributeRepository;
 use Illuminate\Support\Facades\Cache;
 
@@ -51,6 +52,8 @@ class AttributeService
     {
         return Cache::rememberForever('attributes',fn() => $this->repository->all());
     }
+
+
 
 
 

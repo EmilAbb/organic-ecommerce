@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AttributeRequest;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Attribute;
+use App\Models\AttributeValueProduct;
 use App\Models\Category;
 use App\Services\AttributeService;
 
@@ -50,5 +51,15 @@ class AttributeController extends Controller
     {
         $this->service->delete($attribute);
         return redirect()->back();
+    }
+
+    public function getAttributesByCategory(Category $category,$productId = null)
+    {
+        $selectedAttributeValues = [];
+        if ($productId){
+            $selectedAttributeValues =  AttributeValueProduct::where('product_id',$productId)->pluck('attribute_value_id')->toArray();
+        }
+        $attributes = $category->load('attributes.values')->attributes;
+        return view('admin.attribute.product-attributes',compact('attributes','selectedAttributeValues'))->render();
     }
 }

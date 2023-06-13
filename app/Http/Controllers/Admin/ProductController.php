@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
+use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductType;
 use App\Services\CategoryService;
 use App\Services\ProductService;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -16,7 +19,6 @@ class ProductController extends Controller
 
     public function index()
     {
-
         $models = $this->service->index();
         return view('admin.product.index',compact('models'));
     }
@@ -44,6 +46,8 @@ class ProductController extends Controller
         $this->service->update($request,$product);
         return redirect()->back();
     }
+
+
 
     public function destroy(Product $product)
     {
