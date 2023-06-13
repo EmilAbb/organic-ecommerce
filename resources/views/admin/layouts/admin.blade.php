@@ -3,27 +3,28 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Dashboard 3</title>
+    <title>Organic: Admin Panel</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{asset('_assets/plugins/fontawesome-free/css/all.min.css')}}">
     <!-- IonIcons -->
     <!-- Theme style -->
-    @yield('css')
+    @stack('css')
     <meta name="csrf" content="{{csrf_token()}}">
     <link rel="stylesheet" href="{{asset('_assets/css/adminlte.min.css')}}">
 </head>
 
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini" >
 <div class="wrapper">
 
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
 
 
         <!-- Sidebar -->
-        <div class="sidebar">
+        <div class="sidebar" >
 
 
             <!-- Sidebar Menu -->
@@ -70,7 +71,7 @@
 
 
 <script src="{{asset('_assets/js/custom.js')}}"></script>
-@yield('js')
+@stack('js')
 </body>
 </html>
 

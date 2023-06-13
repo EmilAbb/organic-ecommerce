@@ -24,14 +24,14 @@
                         <td><img width="100" src="{{asset('storage/'.$model->image)}}"></td>
 
                        <td>
-                            <a class="btn btn-secondary" href="{{route('product-image.edit',$model->id)}}">Edit</a>
+                            <a class="btn btn-secondary" href="{{route('product-image.edit',$model->id)}}"><i class="fa-solid fa-pen text-white"></i></a>
                         </td>
 
                         <td>
                             <form class="delete-form" action="{{route('product-image.destroy',$model->id)}}" method="POST">
                                 @method('DELETE')
                                 @csrf
-                                <button class="btn btn-danger">Delete</button>
+                                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
 
                             </form>
                         </td>
@@ -43,7 +43,7 @@
     </div>
 @endsection
 
-@section('js')
+@push('js')
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script>
         $( function() {
@@ -61,4 +61,4 @@
             })
         });
     </script>
-@endsection
+@endpush

@@ -11,7 +11,7 @@ class Translation extends Model
     use HasTranslations;
 
     protected $table = 'translations';
-    public $timestamps = false;
+    public $timestamps = true;
     protected $guarded = [];
     public array $translatable = ['value'];
 }

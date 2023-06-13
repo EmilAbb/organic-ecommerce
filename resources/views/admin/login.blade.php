@@ -14,9 +14,9 @@
     <link rel="stylesheet" href="{{asset('_assets/css/adminlte.min.css')}}">
 </head>
 
-<body>
+<body style="background-color: burlywood">
 
-<div class="container" style="margin-top: 100px">
+<div class="container" style="margin-top: 170px">
     <div class="row ">
         <div class="col-md-4 mx-auto">
             <div class="card">

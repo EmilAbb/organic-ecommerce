@@ -16,9 +16,9 @@
                                 <li class="nav-item ">
                                     <a
                                         class="nav-link {{$loop->first ? 'active show' : ''}}@error("$lang.title") text-danger @enderror"
-                                        id="custom-tabs-one-home-tab" data-toggle="pill" href="#title-{{$lang}}"
+                                        id="custom-tabs-one-home-tab" data-toggle="pill" href="#tab-{{$lang}}"
                                         role="tab" aria-controls="custom-tabs-one-home"
-                                        aria-selected="true">Title {{$lang}}</a>
+                                        aria-selected="true">{{$lang}}</a>
                                 </li>
 
                             @endforeach
@@ -28,9 +28,10 @@
                     <div class="card-body">
                         <div class="tab-content" id="custom-tabs-one-tabContent">
                             @foreach(config('app.languages') as $lang)
-                                <div class="tab-pane fade {{$loop->first ? 'active show' : ''}}" id="title-{{$lang}}"
+                                <div class="tab-pane fade {{$loop->first ? 'active show' : ''}}" id="tab-{{$lang}}"
                                      role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
                                     <div class="form-group">
+                                        <label>Title</label>
                                         <input type="text" placeholder="Title" name="{{$lang}}[title]"
                                                value="{{old($lang.'title', isset($model) ? $model->translateOrDefault($lang)->title : '' )}}"
                                                class="form-control">
@@ -38,36 +39,8 @@
                                         <span class="text-danger">{{$message}}</span>
                                         @enderror
                                     </div>
-                                </div>
-                            @endforeach
-
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="card card-primary card-tabs">
-                    <div class="card-header p-0 pt-1">
-                        <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
-                            @foreach(config('app.languages') as $lang)
-                                <li class="nav-item ">
-                                    <a
-                                        class="nav-link {{$loop->first ? 'active show' : ''}}@error("$lang.slug") text-danger @enderror"
-                                        id="custom-tabs-one-home-tab" data-toggle="pill" href="#slug-{{$lang}}"
-                                        role="tab" aria-controls="custom-tabs-one-home"
-                                        aria-selected="true">Slug {{$lang}}</a>
-                                </li>
-
-                            @endforeach
-
-                        </ul>
-                    </div>
-                    <div class="card-body">
-                        <div class="tab-content" id="custom-tabs-one-tabContent">
-                            @foreach(config('app.languages') as $lang)
-                                <div class="tab-pane fade {{$loop->first ? 'active show' : ''}}" id="slug-{{$lang}}"
-                                     role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
                                     <div class="form-group">
+                                        <label>Slug</label>
                                         <input type="text" placeholder="Slug" name="{{$lang}}[slug]"
                                                value="{{old($lang.'slug', isset($model) ? $model->translateOrDefault($lang)->slug : ''  )}}"
                                                class="form-control">
@@ -82,6 +55,7 @@
                     </div>
 
                 </div>
+
                 <div class="form-group">
                     <label>Parent Category</label>
                     <select class="form-control" name="parent_id" id="">
@@ -100,7 +74,7 @@
 
                 <div class="form-group">
                     <label>Attributes</label>
-                    <select id="select2" class="form-control" name="attributes[]" id="" multiple>
+                    <select  class="form-control select2" name="attributes[]" id="" multiple>
                         @foreach($attributes as $attribute)
                             <option value="{{$attribute->id}}" @isset($model) @selected(in_array($attribute->id,old('attributes[]',$model->attributes->pluck('id')->toArray())))@endisset >{{$attribute->title}}</option>
                         @endforeach
@@ -136,14 +110,16 @@
         </div>
     </div>
 @endsection
-
-@section('js')
+@push('js')
     <script src="{{asset('_assets/plugins/select2/js/select2.full.js')}}"></script>
     <script>
         $('#select2').select2();
     </script>
-@endsection
+@endpush
 
-@section('css')
+@push('css')
     <link rel="stylesheet" href="{{asset('_assets/plugins/select2/css/select2.css')}}">
-@endsection
+@endpush
+
+@include('admin.includes.select2')
+
