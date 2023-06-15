@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Services\CategoryService;
+use App\Services\ProductService;
 
 
-class HomeController extends Controller
+class SiteController extends Controller
 {
     public function home()
     {
@@ -27,4 +29,13 @@ class HomeController extends Controller
         return view('front.product-slug',compact('products'))->render();
 
     }
+
+    public function shop(CategoryService $categoryService,Product $product)
+    {
+        $products = Product::paginate(9);
+        $categories = $categoryService->cachedCategories();
+        return view('front.shop',compact('categories','products'));
+    }
+
+
 }

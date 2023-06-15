@@ -45,7 +45,6 @@
 
 
 @push('js')
-{{--    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>--}}
     <script>
         $(document).ready(function(){
             $('.product-link').on('click',function (){
@@ -59,19 +58,6 @@
                 })
             })
         })
-
-        {{--function getCategoryAttributes(categoryId){--}}
-        {{--    const productId = '{{isset($model) ? $model->id : ""}}'--}}
-        {{--    $.ajax({--}}
-        {{--        method:'get',--}}
-        {{--        url:"{{route('attributes-by-category',['category-id','product-id'])}}".replace('category-id',categoryId).replace('product-id',productId),--}}
-        {{--        success(response){--}}
-        {{--            $('#attribute-area').html(response)--}}
-        {{--            $('.select2').select2();--}}
-        {{--        }--}}
-        {{--    })--}}
-        {{--}--}}
-
     </script>
 @endpush
 

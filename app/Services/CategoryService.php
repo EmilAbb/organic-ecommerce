@@ -62,6 +62,8 @@ class CategoryService
         Cache::forget('categories');
     }
 
+
+
     public function cachedCategories()
     {
         return Cache::rememberForever('categories', fn() => $this->repository->all(with: ['translations']));

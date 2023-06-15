@@ -5,7 +5,7 @@
     </div>
         <ul>
              @foreach($categories->where('parent_id',null) as $category)
-                 <li><a href="#">{{$category->title}}</a>
+                 <li><a href="{{route('shop.page')}}">{{$category->title}}</a>
                  @if($categories->where('parent_id',$category->id)->count())
                      <ul>
                          @foreach($categories->where('parent_id',$category->id) as $subCategory)

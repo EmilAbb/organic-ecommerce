@@ -4,12 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
-use App\Models\Category;
 use App\Models\Product;
-use App\Models\ProductType;
 use App\Services\CategoryService;
 use App\Services\ProductService;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -53,5 +51,13 @@ class ProductController extends Controller
     {
         $this->service->delete($product);
         return redirect()->back();
+    }
+
+    public function filter(Request $request)
+    {
+        $minPrice = $request->input('min_price');
+        $maxPrice = $request->input('max_price');
+        $products = Product::whereBetween('price',[$minPrice , $maxPrice])->get();
+        return view('components.products',compact('products'))->render();
     }
 }

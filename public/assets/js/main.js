@@ -162,7 +162,7 @@
     /*-----------------------
 		Price Range Slider
 	------------------------ */
-    var rangeSlider = $(".price-range"),
+    var rangeSlider = $("price-range"),
         minamount = $("#minamount"),
         maxamount = $("#maxamount"),
         minPrice = rangeSlider.data('min'),
@@ -177,8 +177,8 @@
             maxamount.val('$' + ui.values[1]);
         }
     });
-    minamount.val('$' + rangeSlider.slider("values", 0));
-    maxamount.val('$' + rangeSlider.slider("values", 1));
+   // minamount.val('$' + rangeSlider.slider("values", 0));
+   // maxamount.val('$' + rangeSlider.slider("values", 1));
 
     /*--------------------------
         Select
