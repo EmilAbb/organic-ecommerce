@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\AttributeCategory;
 use App\Models\Category;
 
+use App\Models\Product;
 use App\Repositories\CategoryRepository;
 use Illuminate\Support\Facades\Cache;
 
@@ -61,6 +62,7 @@ class CategoryService
     {
         Cache::forget('categories');
     }
+
 
 
 

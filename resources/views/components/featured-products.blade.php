@@ -29,7 +29,7 @@
 
                         </div>
                         <div class="featured__item__text">
-                            <h6><a href="#">{{$product->title}}</a></h6>
+                            <h6><a  href="{{route('product.detail',$product->slug)}}">{{$product->title}}</a></h6>
                             <h5>${{$product->price}}</h5>
                         </div>
                     </div>

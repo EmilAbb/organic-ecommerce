@@ -37,5 +37,15 @@ class SiteController extends Controller
         return view('front.shop',compact('categories','products'));
     }
 
+    public function productDetail($slug)
+    {
+        $product = Product::with(['reviews','images','category.translations','translations'])
+            ->whereTranslation('slug',$slug,app()
+                ->getLocale())->first();
+        $products = Product::where('category_id',$product->category->id)->get();
+        $avg_rating = round($product->reviews->pluck('rating')->avg(),2);
+        return view('front.product',compact('product','products','avg_rating'));
+    }
+
 
 }

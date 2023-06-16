@@ -159,6 +159,13 @@
         autoplay: true
     });
 
+    // RATING STAR
+
+
+
+
+
+
     /*-----------------------
 		Price Range Slider
 	------------------------ */

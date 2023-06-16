@@ -5,7 +5,7 @@
             <div class="latest-prdouct__slider__item">
 
                 @foreach($products->take(3) as $product)
-                    <a href="#" class="latest-product__item">
+                    <a href="{{route('product.detail',$product->slug)}}" class="latest-product__item">
                         <div class="latest-product__item__pic"> <img width="200px" height="200px" src="{{asset('storage/'.$product->image)}}" alt=""> </div>
                         <div class="latest-product__item__text">
                             <h6>{{$product->title}}</h6>
@@ -16,7 +16,7 @@
             </div>
             <div class="latest-prdouct__slider__item">
                 @foreach($products->skip(3)->take(3) as $product)
-                    <a href="#" class="latest-product__item">
+                    <a href="{{route('product.detail',$product->slug)}}" class="latest-product__item">
                         <div class="latest-product__item__pic"> <img width="200px" height="200px" src="{{asset('storage/'.$product->image)}}" alt=""> </div>
                         <div class="latest-product__item__text">
                             <h6>{{$product->title}}</h6>

@@ -7,6 +7,7 @@
     <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="token" content="{{csrf_token()}}">
     <title>@yield('title')</title>
 
     <!-- Google Font -->
@@ -124,14 +125,14 @@
         <div class="row">
             <div class="col-lg-3">
                 <div class="header__logo">
-                    <a href="./index.html"><img src="{{asset('assets/img/logo.png')}}" alt=""></a>
+                    <a href="{{route('home-page')}}"><img src="{{asset('assets/img/logo.png')}}" alt=""></a>
                 </div>
             </div>
             <div class="col-lg-6">
                 <nav class="header__menu">
                     <ul>
-                        <li><a href="./index.html">Home</a></li>
-                        <li class="active"><a href="./shop-grid.html">Shop</a></li>
+                        <li><a href="{{route('home-page')}}">Home</a></li>
+                        <li class="active"><a href="{{route('shop.page')}}">Shop</a></li>
                         <li><a href="#">Pages</a>
                             <ul class="header__menu__dropdown">
                                 <li><a href="./shop-details.html">Shop Details</a></li>
