@@ -7,6 +7,7 @@
     <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="token" content="{{csrf_token()}}">
     <title>Shop Grid</title>
 
     <!-- Google Font -->
@@ -153,10 +154,10 @@
             <div class="col-lg-3">
                 <div class="header__cart">
                     <ul>
-                        <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                        <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                        <li><a href="{{route('wishlist')}}"><i class="fa fa-heart"></i> <span>{{Cart::name('wishlist')->countItems()}}</span></a></li>
+                        <li><a href="{{route('basket')}}"><i class="fa fa-shopping-bag"></i> <span>{{Cart::name('basket')->countItems()}}</span></a></li>
                     </ul>
-                    <div class="header__cart__price">item: <span>$150.00</span></div>
+                    <div class="header__cart__price">item: <span>${{$basket->getTotal()}}</span></div>
                 </div>
             </div>
         </div>
@@ -199,12 +200,17 @@
                     <div class="product__details__quantity">
                         <div class="quantity">
                             <div class="pro-qty">
-                                <input type="text" value="1">
+                                <input id="input-qty" type="text" value="1">
                             </div>
                         </div>
                     </div>
-                    <a href="#" class="primary-btn">ADD TO CARD</a>
-                    <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
+                    <a data-id="{{$product->id}}"
+                       data-qty="1"
+                       href=""
+                       class="primary-btn add-to-card"
+                       data-filters=""
+                    >ADD TO CARD </a>
+                    <a href="" class="heart-icon add-wishlist" data-qty="1" data-id="{{$product->id}}"><i class="fa-regular fa-heart"></i></a>
                     <ul>
                         <li><b>Category:</b> <b>{{$product->category->title}}</b></li>
                         <li><b>Specs:</b> <b>{{$product->specs}}</b></li>
@@ -324,15 +330,18 @@
           @foreach($products as $product)
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="product__item">
-                        <div class="product__item__pic set-bg">
+                        <div class="product__item__pic">
                             <img src="{{asset('storage/'.$product->image)}}" alt="">
                             <ul class="product__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                <li><a data-qty="1" data-id="{{$product->id}}" href="" class="add-to-wishlist"><i class="fa fa-heart"></i></a></li>
+
+                                <li><a class="add-card"
+                                       data-qty="1" data-id="{{$product->id}}"
+                                       href=""><i class="fa fa-shopping-cart"></i></a></li>
                             </ul>
                         </div>
                         <div class="product__item__text">
-                            <h6><a href="#">{{$product->title}}</a></h6>
+                            <h6><a href="{{route('product.detail',$product->slug)}}">{{$product->title}}</a></h6>
                             <h5>${{$product->price}}</h5>
                         </div>
                     </div>
@@ -467,6 +476,106 @@
            }
        })
    })
+
+
+</script>
+
+<script>
+    $(document).on('change mouseleave','#input-qty',function (e){
+        e.preventDefault()
+      const qty = $(this).val()
+        $('.add-to-card').attr('data-qty',qty)
+
+        $(document).on('click','.add-to-card',function (e){
+            $(this).append("<i class='fa-solid fa-check'></i>")
+            var $el = $(this)
+            $.ajax({
+                method:'POST',
+                url: "{{route('add.basket')}}",
+                data:{
+                    _token: $('meta[name=token]').attr('content'),
+                    qty:$el.attr('data-qty'),
+                    product_id:$el.attr('data-id')
+                },
+                success(){
+
+
+                }
+
+
+            })
+        })
+    })
+
+    $(document).on('click','.add-card',function (e){
+        e.preventDefault()
+        // const qty = $(this).val()
+        // $('.add-to-shop').attr('data-qty',qty)
+        var $el = $(this)
+        $.ajax({
+            method:'POST',
+            url: "{{route('add.basket')}}",
+            data:{
+                _token: $('meta[name=token]').attr('content'),
+                qty:$el.attr('data-qty'),
+                product_id:$el.attr('data-id')
+            },
+            success(){
+                window.location.reload()
+            }
+
+
+        })
+    })
+
+
+    $(document).on('change mouseleave','#input-qty',function (e){
+        e.preventDefault()
+        const qty = $(this).val()
+        $('.add-wishlist').attr('data-qty',qty)
+
+        $(document).on('click','.add-wishlist',function (e){
+            e.preventDefault()
+            var $el = $(this)
+            $.ajax({
+                method:'POST',
+                url: "{{route('add.wishlist')}}",
+                data:{
+                    _token: $('meta[name=token]').attr('content'),
+                    qty:$el.attr('data-qty'),
+                    product_id:$el.attr('data-id')
+                },
+                success(){
+                    window.location.reload()
+
+                }
+
+
+            })
+        })
+    })
+
+    $(document).on('click','.add-to-wishlist',function (e){
+        e.preventDefault()
+        // const qty = $(this).val()
+        // $('.add-to-shop').attr('data-qty',qty)
+        var $el = $(this)
+        $.ajax({
+            method:'POST',
+            url: "{{route('add.wishlist')}}",
+            data:{
+                _token: $('meta[name=token]').attr('content'),
+                qty:$el.attr('data-qty'),
+                product_id:$el.attr('data-id')
+            },
+            success(){
+                window.location.reload()
+            }
+
+
+        })
+    })
+
 </script>
 
 

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -8,10 +9,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="token" content="{{csrf_token()}}">
-    <title>@yield('title')</title>
+    <title>Shop Grid</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Css Styles -->
     <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}" type="text/css">
@@ -22,10 +24,13 @@
     <link rel="stylesheet" href="{{asset('assets/css/owl.carousel.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('assets/css/slicknav.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}" type="text/css">
-    @stack('css')
+
 </head>
 
 <body>
+<!-- Page Preloder -->
+
+<!-- Humberger Begin -->
 <div class="humberger__menu__overlay"></div>
 <div class="humberger__menu__wrapper">
     <div class="humberger__menu__logo">
@@ -84,6 +89,7 @@
 </div>
 <!-- Humberger End -->
 
+<!-- Header Section Begin -->
 <header class="header">
     <div class="header__top">
         <div class="container">
@@ -156,54 +162,76 @@
                 </div>
             </div>
         </div>
+{{--        @dd(session('cartCount'))--}}
         <div class="humberger__open">
             <i class="fa fa-bars"></i>
         </div>
     </div>
 </header>
-<section class="hero hero-normal">
+
+
+<section class="shoping-cart spad">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3">
-                <x-category-list/>
-            </div>
-            <div class="col-lg-9">
-                <div class="hero__search">
-                    <div class="hero__search__form">
-                        <form action="#">
-                            <div class="hero__search__categories">
-                                All Categories
-                                <span class="arrow_carrot-down"></span>
-                            </div>
-                            <input type="text" placeholder="What do yo u need?">
-                            <button type="submit" class="site-btn">SEARCH</button>
-                        </form>
-                    </div>
-                    <div class="hero__search__phone">
-                        <div class="hero__search__phone__icon">
-                            <i class="fa fa-phone"></i>
-                        </div>
-                        <div class="hero__search__phone__text">
-                            <h5>+65 11.188.888</h5>
-                            <span>support 24/7 time</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="hero__item set-bg mt-5" data-setbg="{{asset('assets/img/hero/banner.jpg')}}" >
-                    <div class="hero__text">
-                        <span>FRUIT FRESH</span>
-                        <h2>Vegetable <br>100% Organic</h2>
-                        <p>Free Pickup and Delivery Available</p>
-                        <a href="#" class="primary-btn">SHOP NOW</a>
-                    </div>
+            <div class="col-lg-12">
+                <div class="shoping__cart__table">
+                    <form action="{{route('update.from.basket')}}" method="POST">
+                        @csrf
+                        <table>
+                            <thead>
+                            <tr>
+                                <th class="shoping__product">Products</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach(Cart::name('wishlist')->getItems() as $wishlistItem)
+                                <tr>
+                                    <td class="shoping__cart__item">
+                                        @if($wishlistItem->get('extra_info'))
+                                        <a target="_blank" href="{{route('product.detail',$wishlistItem->get('extra_info')['product']->slug)}}">
+                                            <img width="100px" height="100px" src="{{asset('storage/'.$wishlistItem->get('extra_info')['product']->image)}}" alt="">
+                                        </a>
+                                            @endif
+                                        <h5>{{$wishlistItem->get('title')}}</h5>
+                                    </td>
+                                    <td class="shoping__cart__price">
+                                        ${{$wishlistItem->get('price')}}
+                                    </td>
+                                    <td class="shoping__cart__total">
+                                        ${{$wishlistItem->getSubTotal()}}
+                                    </td>
+                                    <td class="shoping__cart__item__close">
+                                        <a href="{{route('delete.from.wishlist',$wishlistItem->get('id'))}}"><span class="icon_close"></span></a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td>
+                                    <div class="row d-flex justify-content-center">
+                                        <div class="">
+                                            <div class="shoping__cart__btns ">
+                                                <a href="{{route('shop.page')}}" class="primary-btn cart-btn my-5">CONTINUE SHOPPING</a>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </form>
                 </div>
             </div>
         </div>
-    </div>
 </section>
-@yield('content')
 
 
+<!-- Footer Section Begin -->
 <footer class="footer spad">
     <div class="container">
         <div class="row">
@@ -260,15 +288,26 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="footer__copyright">
-                    <div class="footer__copyright__text"><p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p></div>
-                    <div class="footer__copyright__payment"><img src="{{asset('assets/img/payment-item.png')}}" alt=""></div>
+                    <div class="footer__copyright__text">
+                        <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+                            All rights reserved | This template is made with <i class="fa fa-heart"
+                                                                                aria-hidden="true"></i> by <a
+                                href="https://colorlib.com" target="_blank">Colorlib</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                    </div>
+                    <div class="footer__copyright__payment"><img src="{{asset('assets/img/payment-item.png')}}" alt="">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </footer>
+<!-- Footer Section End -->
+
+<!-- Js Plugins -->
+
+
 <script src="{{asset('assets/js/jquery-3.3.1.min.js')}}"></script>
 <script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('assets/js/jquery.nice-select.min.js')}}"></script>
@@ -277,9 +316,6 @@
 <script src="{{asset('assets/js/mixitup.min.js')}}"></script>
 <script src="{{asset('assets/js/owl.carousel.min.js')}}"></script>
 <script src="{{asset('assets/js/main.js')}}"></script>
-@stack('js')
-
 </body>
 
 </html>
-

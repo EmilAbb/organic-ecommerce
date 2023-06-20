@@ -2,18 +2,28 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Enums\BasketType;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Services\BasketService;
 use App\Services\CategoryService;
 use App\Services\ProductService;
+use App\Services\WishlistService;
 
 
 class SiteController extends Controller
 {
+
+    public function __construct(protected BasketService $basketService,protected WishlistService $wishlistService)
+    {
+    }
+
     public function home()
     {
-        return view('front.home');
+        $wishlist = $this->wishlistService->getCard(BasketType::WISHLIST);
+        $basket = $this->basketService->getCard(BasketType::BASKET);
+        return view('front.home',compact('basket','wishlist'));
     }
 
     public function getCategoryBySlug($slug)
@@ -32,19 +42,21 @@ class SiteController extends Controller
 
     public function shop(CategoryService $categoryService,Product $product)
     {
+        $basket = $this->basketService->getCard(BasketType::BASKET);
         $products = Product::paginate(9);
         $categories = $categoryService->cachedCategories();
-        return view('front.shop',compact('categories','products'));
+        return view('front.shop',compact('categories','products','basket'));
     }
 
     public function productDetail($slug)
     {
+        $basket = $this->basketService->getCard(BasketType::BASKET);
         $product = Product::with(['reviews','images','category.translations','translations'])
             ->whereTranslation('slug',$slug,app()
                 ->getLocale())->first();
         $products = Product::where('category_id',$product->category->id)->get();
         $avg_rating = round($product->reviews->pluck('rating')->avg(),2);
-        return view('front.product',compact('product','products','avg_rating'));
+        return view('front.product',compact('product','products','avg_rating','basket'));
     }
 
 

@@ -1821,6 +1821,15 @@ ol {
 	content: "";
 }
 
+.okay{
+    display: none;
+}
+
+.okay.block-okay{
+    display: block;
+}
+
+
 .product__details__tab .nav-tabs:after {
 	position: absolute;
 	right: 0;

@@ -7,6 +7,7 @@
     <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="token" content="{{csrf_token()}}">
     <title>Shop Grid</title>
 
     <!-- Google Font -->
@@ -55,12 +56,12 @@
     </div>
     <nav class="humberger__menu__nav mobile-menu">
         <ul>
-            <li class="active"><a href="./index.html">Home</a></li>
+            <li class="active"><a href="{{route('home-page')}}">Home</a></li>
             <li><a href="./shop-grid.html">Shop</a></li>
             <li><a href="#">Pages</a>
                 <ul class="header__menu__dropdown">
-                    <li><a href="./shop-details.html">Shop Details</a></li>
-                    <li><a href="./shoping-cart.html">Shoping Cart</a></li>
+                    <li><a href="">Shop Details</a></li>
+                    <li><a href="{{route('basket')}}">Shoping Cart</a></li>
                     <li><a href="./checkout.html">Check Out</a></li>
                     <li><a href="./blog-details.html">Blog Details</a></li>
                 </ul>
@@ -127,18 +128,18 @@
         <div class="row">
             <div class="col-lg-3">
                 <div class="header__logo">
-                    <a href="./index.html"><img src="{{asset('assets/img/logo.png')}}" alt=""></a>
+                    <a href="{{route('home-page')}}"><img src="{{asset('assets/img/logo.png')}}" alt=""></a>
                 </div>
             </div>
             <div class="col-lg-6">
                 <nav class="header__menu">
                     <ul>
-                        <li><a href="./index.html">Home</a></li>
+                        <li><a href="{{route('home-page')}}">Home</a></li>
                         <li class="active"><a href="./shop-grid.html">Shop</a></li>
                         <li><a href="#">Pages</a>
                             <ul class="header__menu__dropdown">
-                                <li><a href="./shop-details.html">Shop Details</a></li>
-                                <li><a href="./shoping-cart.html">Shoping Cart</a></li>
+                                <li><a href="#">Shop Details</a></li>
+                                <li><a href="{{route('basket')}}">Shoping Cart</a></li>
                                 <li><a href="./checkout.html">Check Out</a></li>
                                 <li><a href="./blog-details.html">Blog Details</a></li>
                             </ul>
@@ -151,10 +152,10 @@
             <div class="col-lg-3">
                 <div class="header__cart">
                     <ul>
-                        <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                        <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                        <li><a href="{{route('wishlist')}}"><i class="fa fa-heart"></i> <span>{{Cart::name('wishlist')->countItems()}}</span></a></li>
+                        <li><a href="{{route('basket')}}"><i class="fa fa-shopping-bag"></i> <span>{{Cart::name('basket')->countItems()}}</span></a></li>
                     </ul>
-                    <div class="header__cart__price">item: <span>$150.00</span></div>
+                    <div class="header__cart__price">item: <span>${{$basket->getTotal()}}</span></div>
                 </div>
             </div>
         </div>
@@ -219,23 +220,23 @@
                     <div class="row">
                         <div class="product__discount__slider owl-carousel">
                             @foreach($products as $product)
-                                <div class="col-lg-4">
-                                    <div class="product__discount__item">
-                                        <div class="product__discount__item__pic set-bg">
-                                            <img width="100%" height="100%" src="{{asset('storage/'.$product->image)}}"
-                                                 alt="" style="object-fit: cover">
-                                            <ul class="product__item__pic__hover">
-                                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="product__discount__item__text">
-                                            <span>{{$product->title}}</span>
-                                            <h5><a href="#">{{$product->category->title}}</a></h5>
-                                            <div class="product__item__price">${{$product->price}}</div>
+                                    <div class="col-lg-4">
+                                        <div class="product__discount__item">
+                                            <div class="product__discount__item__pic set-bg">
+                                                <img width="100%" height="100%" src="{{asset('storage/'.$product->image)}}"
+                                                     alt="" style="object-fit: cover">
+                                                <ul class="product__item__pic__hover">
+                                                    <li><a class="add-to-wishlist" data-qty="1" data-id="{{$product->id}}" href=""><i class="fa fa-heart"></i></a></li>
+                                                    <li><a data-qty="1" class="add-to-shop"  data-id="{{$product->id}}" href=""><i class="fa fa-shopping-cart"></i></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="product__discount__item__text">
+                                                <span>{{$product->category->title}}</span>
+                                                <h5><a href="{{route('product.detail',$product->slug)}}">{{$product->title}}</a></h5>
+                                                <div class="product__item__price">${{$product->price}}</div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                             @endforeach
                         </div>
                     </div>
@@ -249,13 +250,13 @@
                                 <div class="product__item__pic set-bg">
                                     <img src="{{asset('storage/'.$product->image)}}" alt="">
                                     <ul class="product__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                        <li><a data-qty="1" data-id="{{$product->id}}" class="add-to-wishlist" href=""><i class="fa fa-heart"></i></a></li>
+                                        <li><a data-qty="1" class="add-to-shop"  data-id="{{$product->id}}" href=""><i class="fa fa-shopping-cart"></i></a></li>
                                     </ul>
                                 </div>
                                 <div class="product__item__text">
-                                    <h6><a href="#">{{$product->title}}</a></h6>
-                                    <h4 class="my-2">{{$product->category->title}}</h4>
+                                    <h6 >{{$product->category->title}}</h6>
+                                    <h4 class="my-2"><a style="color: #000000" href="{{route('product.detail',$product->slug)}}">{{$product->title}}</a></h4>
                                     <h5>${{$product->price}}</h5>
                                 </div>
                             </div>
@@ -402,6 +403,48 @@
                     }
                 })
             }
+
+        })
+    })
+
+    $(document).on('click','.add-to-shop',function (e){
+        e.preventDefault()
+        // const qty = $(this).val()
+        // $('.add-to-shop').attr('data-qty',qty)
+        var $el = $(this)
+        $.ajax({
+            method:'POST',
+            url: "{{route('add.basket')}}",
+            data:{
+                _token: $('meta[name=token]').attr('content'),
+                qty:$el.attr('data-qty'),
+                product_id:$el.attr('data-id')
+            },
+            success(){
+                window.location.reload()
+            }
+
+
+        })
+    })
+
+    $(document).on('click','.add-to-wishlist',function (e){
+        e.preventDefault()
+        // const qty = $(this).val()
+        // $('.add-to-shop').attr('data-qty',qty)
+        var $el = $(this)
+        $.ajax({
+            method:'POST',
+            url: "{{route('add.wishlist')}}",
+            data:{
+                _token: $('meta[name=token]').attr('content'),
+                qty:$el.attr('data-qty'),
+                product_id:$el.attr('data-id')
+            },
+            success(){
+                window.location.reload()
+            }
+
 
         })
     })

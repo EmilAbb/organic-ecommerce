@@ -94,6 +94,16 @@ class ProductService
         })->paginate(6);
     }
 
+    public function getProductForBasket($productId)
+    {
+      return $this->repository->query()->with(['translations'])->where('id',$productId)->first();
+    }
+
+    public function getProductForWishlist($productId)
+    {
+        return $this->repository->query()->with(['translations'])->where('id',$productId)->first();
+    }
+
 
 
 

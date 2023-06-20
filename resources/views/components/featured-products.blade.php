@@ -23,8 +23,8 @@
                     <div class="featured__item">
                         <div class="featured__item__pic set-bg" data-setbg="{{asset('storage/'.$product->image)}}">
                             <ul class="featured__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                <li><a class="add-to-wishlist" data-qty="1" data-id="{{$product->id}}" href=""><i class="fa fa-heart"></i></a></li>
+                                <li><a data-qty="1" class="add-to-shop"  data-id="{{$product->id}}" href=""><i class="fa fa-shopping-cart "></i></a></li>
                             </ul>
 
                         </div>
@@ -56,6 +56,49 @@
                         // $('.select2').select2();
                     }
                 })
+            })
+        })
+    </script>
+
+    <script>
+        $(document).on('click','.add-to-shop',function (e){
+            e.preventDefault()
+            var $el = $(this)
+            $.ajax({
+                method:'POST',
+                url: "{{route('add.basket')}}",
+                data:{
+                    _token: $('meta[name=token]').attr('content'),
+                    qty:$el.attr('data-qty'),
+                    product_id:$el.attr('data-id')
+                },
+                success(){
+                   window.location.reload()
+                }
+
+
+            })
+        })
+
+        $(document).on('click','.add-to-wishlist',function (e){
+            e.preventDefault()
+            console.log(1)
+            // const qty = $(this).val()
+            // $('.add-to-shop').attr('data-qty',qty)
+            var $el = $(this)
+            $.ajax({
+                method:'POST',
+                url: "{{route('add.wishlist')}}",
+                data:{
+                    _token: $('meta[name=token]').attr('content'),
+                    qty:$el.attr('data-qty'),
+                    product_id:$el.attr('data-id')
+                },
+                success(){
+                    window.location.reload()
+                }
+
+
             })
         })
     </script>
