@@ -3,13 +3,17 @@
 namespace App\Http\Controllers\Front;
 
 use App\Enums\BasketType;
+use App\Enums\Guards;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
+use App\Models\User;
 use App\Services\BasketService;
 use App\Services\CategoryService;
 use App\Services\ProductService;
 use App\Services\WishlistService;
+use Illuminate\Support\Facades\Auth;
 
 
 class SiteController extends Controller
@@ -57,6 +61,18 @@ class SiteController extends Controller
         $products = Product::where('category_id',$product->category->id)->get();
         $avg_rating = round($product->reviews->pluck('rating')->avg(),2);
         return view('front.product',compact('product','products','avg_rating','basket'));
+    }
+
+    public function profile(User $user)
+    {
+
+        if (!Auth::check()) {
+            return redirect()->route('basket');
+        }
+        $user = Auth::user();
+        $orders = Order::where('user_id',auth()->guard(Guards::USER->value)->user()->id)->get();
+
+        return view('front.profile',compact('user','orders'));
     }
 
 

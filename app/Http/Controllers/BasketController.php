@@ -34,7 +34,7 @@ class BasketController extends Controller
     public function updateBasket()
     {
        $this->basketService->updateBasket(BasketType::BASKET,request()->all());
-        return redirect()->back();
+        return redirect()->back()->with('success','Updated Product');
     }
 
     public function deleteFromBasket($id)
@@ -45,6 +45,6 @@ class BasketController extends Controller
         }
         session(['cartCount' => $cartCount]);
         $this->basketService->deleteFromBasket(BasketType::BASKET,$id);
-        return redirect()->back();
+        return redirect()->back()->with('success','Deleted Product');
     }
 }

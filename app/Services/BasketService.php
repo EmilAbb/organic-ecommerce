@@ -46,6 +46,9 @@ class BasketService
     private function add($basket, $product, $basketRequest)
     {
         $basket->addItem($this->getBasketData($product, $basketRequest));
+        if ($basket){
+            toastr()->success('Added Basket');
+        }
     }
 
     public function updateBasket(BasketType $basketType, $data)

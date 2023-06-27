@@ -47,6 +47,9 @@ class WishlistService
     private function add($wishlist, $product, $wishlistRequest)
     {
         $wishlist->addItem($this->getWishlistData($product,$wishlistRequest));
+        if ($wishlist){
+            toastr()->success('Added Wishlist');
+        }
     }
 
     public function updateWishlist(BasketType $basketType, $data)

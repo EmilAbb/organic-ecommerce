@@ -119,7 +119,7 @@
                             </ul>
                         </div>
                         <div class="header__top__right__auth">
-                            <a href="#"><i class="fa fa-user"></i> Login</a>
+                            <a href="{{route('loginView.page')}}"><i class="fa fa-user"></i> Login</a>
                         </div>
                     </div>
                 </div>
@@ -154,6 +154,10 @@
             <div class="col-lg-3">
                 <div class="header__cart">
                     <ul>
+                        @if(auth()->check())
+                            <li><a href="{{route('profile')}}"><i class="fa fa-user"></i></a></li>
+                            <li> <a href="{{route('logout')}}"><i class="fa-solid fa-right-from-bracket"></i></a></li>
+                        @endif
                         <li><a href="{{route('wishlist')}}"><i class="fa fa-heart"></i> <span>{{Cart::name('wishlist')->countItems()}}</span></a></li>
                         <li><a href="{{route('basket')}}"><i class="fa fa-shopping-bag"></i> <span>{{Cart::name('basket')->countItems()}}</span></a></li>
                     </ul>
@@ -487,7 +491,6 @@
         $('.add-to-card').attr('data-qty',qty)
 
         $(document).on('click','.add-to-card',function (e){
-            $(this).append("<i class='fa-solid fa-check'></i>")
             var $el = $(this)
             $.ajax({
                 method:'POST',
@@ -498,7 +501,7 @@
                     product_id:$el.attr('data-id')
                 },
                 success(){
-
+                    window.location.reload()
 
                 }
 

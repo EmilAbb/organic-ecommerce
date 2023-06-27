@@ -39,7 +39,7 @@ class WishlistController extends Controller
         }
         session(['wishlistCount' => $wishlistCount]);
         $this->wishlistService->deleteFromWishlist(BasketType::WISHLIST,$id);
-        return redirect()->back();
+        return redirect()->back()->with('success','Deleted Product');
     }
 
     public function updateWishlist()

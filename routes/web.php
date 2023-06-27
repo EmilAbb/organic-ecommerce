@@ -2,8 +2,11 @@
 
 
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\BasketController;
 use App\Http\Controllers\Front\SiteController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\WishListController;
 use Illuminate\Support\Facades\Route;
@@ -22,9 +25,10 @@ Route::get('/product/{slug}',[SiteController::class,'productDetail'])->name('pro
 
 Route::post('rate',[RatingController::class,'rateProduct'])->name('rate.product');
 
-Route::get('basket',[BasketController::class,'index'])->name('basket');
 
 //BASKET
+
+Route::get('basket',[BasketController::class,'index'])->name('basket');
 
 Route::post('basket',[BasketController::class,'addBasket'])->name('add.basket');
 
@@ -41,6 +45,33 @@ Route::post('wishlist',[WishlistController::class,'addWishlist'])->name('add.wis
 Route::get('wishlist-delete/{id}',[WishlistController::class,'deleteFromWishlist'])->name('delete.from.wishlist');
 
 Route::post('wishlist-update',[WishlistController::class,'updateWishlist'])->name('update.from.wishlist');
+
+
+//LOGIN PAGE
+Route::get('login',[LoginController::class,'loginView'])->name('loginView.page');
+
+Route::post('register',[LoginController::class,'register'])->name('register');
+
+Route::post('login',[LoginController::class,'login'])->name('login');
+
+
+Route::get('logout',[LoginController::class,'logout'])->name('logout');
+
+//FORGOT PASSWORD
+
+//Profile
+
+Route::get('profile',[SiteController::class,'profile'])->name('profile');
+
+//ORDERS
+
+Route::post('complete-order',[OrderController::class,'completeOrder'])->name('complete.order');
+
+Route::get('order/{id}',[OrderController::class,'orderDetail'])->name('order.detail')->middleware('auth:web');
+
+
+
+
 
 
 

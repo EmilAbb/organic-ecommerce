@@ -120,7 +120,7 @@
                             </ul>
                         </div>
                         <div class="header__top__right__auth">
-                            <a href="#"><i class="fa fa-user"></i> Login</a>
+                            <a href="{{route('loginView.page')}}"><i class="fa fa-user"></i> Login</a>
                         </div>
                     </div>
                 </div>
@@ -156,6 +156,10 @@
             <div class="col-lg-3">
                 <div class="header__cart">
                     <ul>
+                        @if(auth()->check())
+                            <li><a href="{{route('profile')}}"><i class="fa fa-user"></i></a></li>
+                            <li> <a href="{{route('logout')}}"><i class="fa-solid fa-right-from-bracket"></i></a></li>
+                        @endif
                         <li><a href="{{route('wishlist')}}"><i class="fa fa-heart"></i> <span>{{Cart::name('wishlist')->countItems()}}</span></a></li>
                         <li><a href="{{route('basket')}}"><i class="fa fa-shopping-bag"></i> <span>{{Cart::name('basket')->countItems()}}</span></a></li>
                     </ul>
@@ -174,7 +178,7 @@
 <section class="shoping-cart spad">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-14 d-flex">
                 <div class="shoping__cart__table">
                     <form action="{{route('update.from.basket')}}" method="POST">
                         @csrf
@@ -216,35 +220,51 @@
                                 </tr>
                             @endforeach
                             </tbody>
-                            <tfoot>
-                            <tr>
-                                <td>
-                                    <div class="row d-flex justify-content-between">
-                                        <div class="col-lg-12">
-                                            <div class="shoping__cart__btns">
-                                                <a href="{{route('shop.page')}}" class="primary-btn cart-btn my-5">CONTINUE SHOPPING</a>
-                                                <button style="margin-left: 100px;border:none"  class="my-5 primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
-                                                    Upadate Cart</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tfoot>
+
                         </table>
                     </form>
                 </div>
-            </div>
-        </div>
-            <div class="col-lg-6">
-                <div class="shoping__checkout">
-                    <h5>Cart Total</h5>
-                    <ul>
-                        <li>Subtotal <span>${{$basket->getTotal()}}</span></li>
-                    </ul>
-                    <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a>
+                <div class="col-lg-6" style="margin-left: 50px">
+                    @auth()
+                        <div class="shoping__checkout">
+                            <h5 style="text-align: center">Order information</h5>
+                            <form action="{{route('complete.order')}}" method="post">
+                                @csrf
+                                <div class="form-group form-group-sm">
+                                    <input type="text" name="phone" placeholder="Phone" class="form-control form-control-sm">
+                                    @error('phone')
+                                    <span class="text-danger">{{$message}}</span>
+                                    @enderror
+                                </div>
+                                <div class="form-group form-group-sm">
+                                    <input type="text" name="address" placeholder="Address" class="form-control form-control-sm">
+                                    @error('address')
+                                    <span class="text-danger">{{$message}}</span>
+                                    @enderror
+                                </div>
+                                <button  class="btn primary-btn">PROCEED TO CHECKOUT</button>
+                            </form>
+
+                            <ul style="margin-top: 20px">
+                                <li>Subtotal <span>${{$basket->getTotal()}}</span></li>
+                            </ul>
+
+                        </div>
+                        <div class="row d-flex justify-content-between">
+                            <div class="col-lg-12">
+                                <div class="shoping__cart__btns">
+                                    <a href="{{route('shop.page')}}" class="primary-btn cart-btn my-5">CONTINUE SHOPPING</a>
+                                    <button style="border:none"  class="my-5 primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
+                                        Upadate Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    @endauth
                 </div>
             </div>
+
+        </div>
+
         </div>
 </section>
 
