@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\BasketController;
@@ -10,7 +11,6 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\WishListController;
 use Illuminate\Support\Facades\Route;
-
 
 
 Route::get('/',[SiteController::class,'home'])->name('home-page');
@@ -68,6 +68,14 @@ Route::get('profile',[SiteController::class,'profile'])->name('profile');
 Route::post('complete-order',[OrderController::class,'completeOrder'])->name('complete.order');
 
 Route::get('order/{id}',[OrderController::class,'orderDetail'])->name('order.detail')->middleware('auth:web');
+
+Route::get('order-delete/{id}',[OrderController::class,'delete'])->name('order.delete');
+
+//CONTACT
+
+Route::get('contact',[SiteController::class,'contact'])->name('contact');
+
+Route::post('message',[SiteController::class,'create'])->name('message');
 
 
 

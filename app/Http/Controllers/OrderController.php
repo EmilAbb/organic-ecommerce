@@ -11,8 +11,6 @@ use App\Models\OrderItem;
 use App\Services\BasketService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Monolog\Handler\IFTTTHandler;
-use mysql_xdevapi\Exception;
 
 class OrderController extends Controller
 {
@@ -60,5 +58,16 @@ class OrderController extends Controller
     {
      $order = Order::where('user_id',auth()->guard(Guards::USER->value)->user()->id)->with('items.product.translations')->where('id',$orderId)->firstOrFail();
      return view('front.order-products',compact('order'));
+    }
+
+    public function delete($id)
+    {
+        $order = Order::findOrFail($id);
+
+        if ($order->user_id !== auth()->user()->id){
+            abort(403);
+        }
+        $order->delete();
+        return redirect()->route('profile')->with('success','Deleted Order');
     }
 }

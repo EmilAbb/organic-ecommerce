@@ -15,4 +15,13 @@ class Order extends Model
     {
         return $this->hasMany(OrderItem::class,'order_id','id');
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($order) {
+            $order->items()->delete();
+        });
+    }
 }

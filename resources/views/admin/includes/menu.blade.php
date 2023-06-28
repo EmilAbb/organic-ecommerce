@@ -72,6 +72,36 @@
     </a>
 </li>
 
+<li class="nav-item" style="border-radius: 20px">
+    <a href="{{route('contact.index')}}"  class="nav-link">
+        <i class="nav-icon fas fa-star"></i>
+        <p style="color: #fff">
+            Contact
+
+        </p>
+    </a>
+</li>
+
+<li class="nav-item" style="border-radius: 20px">
+    <a href="{{route('contact-map.index')}}"  class="nav-link">
+        <i class="nav-icon fas fa-star"></i>
+        <p style="color: #fff">
+            Contact-Map
+
+        </p>
+    </a>
+</li>
+
+<li class="nav-item" style="border-radius: 20px">
+    <a href="{{route('contact-message.index')}}"  class="nav-link">
+        <i class="nav-icon fas fa-star"></i>
+        <p style="color: #fff">
+            Contact-Message
+
+        </p>
+    </a>
+</li>
+
 
 
 

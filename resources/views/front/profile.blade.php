@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="token" content="{{csrf_token()}}">
-    <title>Shop Grid</title>
+    <title>Profile</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
@@ -79,11 +79,18 @@
                         <li><a href="{{route('home-page')}}">Home</a></li>
                         <li class="active"><a href="{{route('shop.page')}}">Shop</a></li>
                         <li><a href="#">Pages</a>
-                            <ul class="header__menu__dropdown">
-                                <li><a href="./shop-details.html">Shop Details</a></li>
-                                <li><a href="./shoping-cart.html">Shoping Cart</a></li>
-                                <li><a href="./checkout.html">Check Out</a></li>
-                                <li><a href="./blog-details.html">Blog Details</a></li>
+                            <ul>
+                                <li><a href="{{route('home-page')}}">Home</a></li>
+                                <li class="active"><a href="{{route('shop.page')}}">Shop</a></li>
+                                <li><a href="#">Pages</a>
+                                    <ul class="header__menu__dropdown">
+                                        <li><a href="#">Shop Details</a></li>
+                                        <li><a href="{{route('basket')}}">Shoping Cart</a></li>
+                                        <li><a href="./blog-details.html">Blog Details</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="./blog.html">Blog</a></li>
+                                <li><a href="{{route('contact')}}">Contact</a></li>
                             </ul>
                         </li>
                         <li><a href="./blog.html">Blog</a></li>
@@ -132,6 +139,7 @@
                                   <th>STATUS</th>
                                   <th>TOTAL</th>
                                   <th>Products</th>
+                                  <th>Delete</th>
                               </tr>
                               </thead>
                               <tbody>
@@ -140,8 +148,14 @@
                                         <td>{{$order->id}}</td>
                                         <td>{{$order->created_at}}</td>
                                         <td>{{\App\Enums\OrderStatus::from($order->status)->name}}</td>
-                                        <td>{{$order->total}}</td>
+                                        <td>${{$order->total}}</td>
                                         <td><a style="color: #7fad39" href="{{route('order.detail',$order->id)}}">Products</a></td>
+                                        <td><a href="{{route('order.delete',$order->id)}}"><lord-icon
+                                                    src="https://cdn.lordicon.com/jmkrnisz.json "
+                                                    trigger="hover"
+                                                    colors="primary:#e83a30"
+                                                    style="cursor: pointer;">
+                                                </lord-icon></a></td>
                                     </tr>
                                 @endforeach
                               </tbody>
@@ -237,6 +251,7 @@
 <script src="{{asset('assets/js/mixitup.min.js')}}"></script>
 <script src="{{asset('assets/js/owl.carousel.min.js')}}"></script>
 <script src="{{asset('assets/js/main.js')}}"></script>
+<script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
 </body>
 
 </html>

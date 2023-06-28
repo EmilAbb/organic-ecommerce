@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="token" content="{{csrf_token()}}">
-    <title>Wishlist</title>
+    <title>Contact</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
@@ -28,66 +28,7 @@
 </head>
 
 <body>
-<!-- Page Preloder -->
 
-<!-- Humberger Begin -->
-<div class="humberger__menu__overlay"></div>
-<div class="humberger__menu__wrapper">
-    <div class="humberger__menu__logo">
-        <a href="#"><img src="{{asset('assets/img/logo.png')}}" alt=""></a>
-    </div>
-    <div class="humberger__menu__cart">
-        <ul>
-            <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
-        </ul>
-        <div class="header__cart__price">item: <span>$150.00</span></div>
-    </div>
-    <div class="humberger__menu__widget">
-        <div class="header__top__right__language">
-            <img src="{{asset('assets/img/language.png')}}" alt="">
-            <div>English</div>
-            <span class="arrow_carrot-down"></span>
-            <ul>
-                <li><a href="#">Spanis</a></li>
-                <li><a href="#">English</a></li>
-            </ul>
-        </div>
-        <div class="header__top__right__auth">
-            <a href="#"><i class="fa fa-user"></i> Login</a>
-        </div>
-    </div>
-    <nav class="humberger__menu__nav mobile-menu">
-        <ul>
-            <li class="active"><a href="./index.html">Home</a></li>
-            <li><a href="./shop-grid.html">Shop</a></li>
-            <li><a href="#">Pages</a>
-                <ul class="header__menu__dropdown">
-                    <li><a href="./shop-details.html">Shop Details</a></li>
-                    <li><a href="./shoping-cart.html">Shoping Cart</a></li>
-                    <li><a href="./checkout.html">Check Out</a></li>
-                    <li><a href="./blog-details.html">Blog Details</a></li>
-                </ul>
-            </li>
-            <li><a href="./blog.html">Blog</a></li>
-            <li><a href="./contact.html">Contact</a></li>
-        </ul>
-    </nav>
-    <div id="mobile-menu-wrap"></div>
-    <div class="header__top__right__social">
-        <a href="#"><i class="fa fa-facebook"></i></a>
-        <a href="#"><i class="fa fa-twitter"></i></a>
-        <a href="#"><i class="fa fa-linkedin"></i></a>
-        <a href="#"><i class="fa fa-pinterest-p"></i></a>
-    </div>
-    <div class="humberger__menu__contact">
-        <ul>
-            <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
-            <li>Free Shipping for all Order of $99</li>
-        </ul>
-    </div>
-</div>
-<!-- Humberger End -->
 
 <!-- Header Section Begin -->
 <header class="header">
@@ -135,6 +76,7 @@
                 </div>
             </div>
             <div class="col-lg-6">
+
                 <nav class="header__menu">
                     <ul>
                         <li><a href="{{route('home-page')}}">Home</a></li>
@@ -147,7 +89,7 @@
                             </ul>
                         </li>
                         <li><a href="./blog.html">Blog</a></li>
-                        <li><a href="{{route('contact')}}">Contact</a></li>
+                        <li><a href="#">Contact</a></li>
                     </ul>
                 </nav>
             </div>
@@ -161,11 +103,11 @@
                         <li><a href="{{route('wishlist')}}"><i class="fa fa-heart"></i> <span>{{Cart::name('wishlist')->countItems()}}</span></a></li>
                         <li><a href="{{route('basket')}}"><i class="fa fa-shopping-bag"></i> <span>{{Cart::name('basket')->countItems()}}</span></a></li>
                     </ul>
-                    <div class="header__cart__price">item: <span>${{$basket->getTotal()}}</span></div>
+                    <div class="header__cart__price">item: <span>${{Cart::name('basket')->getTotal()}}</span></div>
                 </div>
             </div>
         </div>
-{{--        @dd(session('cartCount'))--}}
+        {{--        @dd(session('cartCount'))--}}
         <div class="humberger__open">
             <i class="fa fa-bars"></i>
         </div>
@@ -173,65 +115,70 @@
 </header>
 
 
-<section class="shoping-cart spad">
+<section class="contact spad">
+    <div class="container">
+        <div class="row">
+           @foreach($contacts as $contact)
+                <div class="col-lg-3 col-md-3 col-sm-6 text-center">
+                    <div class="contact__widget">
+                        <span>{!! $contact->icon !!}</span>
+                        <h4>{{$contact->title}}</h4>
+                        <p>{{$contact->text}}</p>
+                    </div>
+                </div>
+           @endforeach
+        </div>
+    </div>
+</section>
+<!-- Contact Section End -->
+
+<!-- Map Begin -->
+<div class="map">
+  @foreach($contactMaps as $contactMap)
+       {!! $contactMap->iframe !!}
+
+
+        <div class="map-inside">
+            <i class="icon_pin"></i>
+            <div class="inside-widget">
+                <h4>{{$contactMap->title}}</h4>
+                <ul>
+                    <li>{{$contactMap->phone}}</li>
+                    <li>{{$contactMap->text}}</li>
+                </ul>
+            </div>
+        </div>
+  @endforeach
+</div>
+<!-- Map End -->
+
+<!-- Contact Form Begin -->
+<div class="contact-form spad">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <div class="shoping__cart__table">
-                    <form action="{{route('update.from.basket')}}" method="POST">
-                        @csrf
-                        <table>
-                            <thead>
-                            <tr>
-                                <th class="shoping__product">Products</th>
-                                <th>Price</th>
-                                <th>Total</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach(Cart::name('wishlist')->getItems() as $wishlistItem)
-                                <tr>
-                                    <td class="shoping__cart__item">
-                                        @if($wishlistItem->get('extra_info'))
-                                        <a target="_blank" href="{{route('product.detail',$wishlistItem->get('extra_info')['product']->slug)}}">
-                                            <img width="100px" height="100px" src="{{asset('storage/'.$wishlistItem->get('extra_info')['product']->image)}}" alt="">
-                                        </a>
-                                            @endif
-                                        <h5>{{$wishlistItem->get('title')}}</h5>
-                                    </td>
-                                    <td class="shoping__cart__price">
-                                        ${{$wishlistItem->get('price')}}
-                                    </td>
-                                    <td class="shoping__cart__total">
-                                        ${{$wishlistItem->getSubTotal()}}
-                                    </td>
-                                    <td class="shoping__cart__item__close">
-                                        <a href="{{route('delete.from.wishlist',$wishlistItem->get('id'))}}"><span class="icon_close"></span></a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <td>
-                                    <div class="row d-flex justify-content-center">
-                                        <div class="">
-                                            <div class="shoping__cart__btns ">
-                                                <a href="{{route('shop.page')}}" class="primary-btn cart-btn my-5">CONTINUE SHOPPING</a>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tfoot>
-                        </table>
-                    </form>
+                <div class="contact__form__title">
+                    <h2>Leave Message</h2>
                 </div>
             </div>
         </div>
-</section>
+        <form action="{{route('message')}}" method="post">
+            @csrf
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <input type="text" placeholder="Your name" name="name">
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <input type="text" placeholder="Your Email" name="email">
+                </div>
+                <div class="col-lg-12 text-center">
+                    <textarea placeholder="Your message" name="message"></textarea>
+                    <button type="submit" class="site-btn">SEND MESSAGE</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
 
 <!-- Footer Section Begin -->
