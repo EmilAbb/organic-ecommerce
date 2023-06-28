@@ -102,6 +102,26 @@
     </a>
 </li>
 
+<li class="nav-item" style="border-radius: 20px">
+    <a href="{{route('organic.index')}}"  class="nav-link">
+        <i class="nav-icon fas fa-star"></i>
+        <p style="color: #fff">
+            Organic
+
+        </p>
+    </a>
+</li>
+
+<li class="nav-item" style="border-radius: 20px">
+    <a href="{{route('menu.index')}}"  class="nav-link">
+        <i class="nav-icon fas fa-star"></i>
+        <p style="color: #fff">
+            Menu
+
+        </p>
+    </a>
+</li>
+
 
 
 

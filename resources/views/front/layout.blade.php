@@ -74,19 +74,11 @@
                 </div>
             </div>
             <div class="col-lg-6">
-                <nav class="header__menu">
-                    <ul>
-                        <li><a href="{{route('home-page')}}">Home</a></li>
-                        <li class="active"><a href="{{route('shop.page')}}">Shop</a></li>
-                        <li><a href="#">Pages</a>
-                            <ul class="header__menu__dropdown">
-                                <li><a href="#">Shop Details</a></li>
-                                <li><a href="{{route('basket')}}">Shoping Cart</a></li>
-                                <li><a href="./blog-details.html">Blog Details</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="./blog.html">Blog</a></li>
-                        <li><a href="{{route('contact')}}">Contact</a></li>
+                <nav class="header__menu" style="width: 650px">
+                    <ul >
+                        @foreach($menus as $menu)
+                            <li><a href="{{$menu->url}}">{{$menu->title}}</a></li>
+                        @endforeach
                     </ul>
                 </nav>
             </div>
@@ -119,10 +111,7 @@
                 <div class="hero__search">
                     <div class="hero__search__form">
                         <form action="#">
-                            <div class="hero__search__categories">
-                                All Categories
-                                <span class="arrow_carrot-down"></span>
-                            </div>
+
                             <input type="text" placeholder="What do yo u need?">
                             <button type="submit" class="site-btn">SEARCH</button>
                         </form>
@@ -137,14 +126,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="hero__item set-bg mt-5" data-setbg="{{asset('assets/img/hero/banner.jpg')}}" >
-                    <div class="hero__text">
-                        <span>FRUIT FRESH</span>
-                        <h2>Vegetable <br>100% Organic</h2>
-                        <p>Free Pickup and Delivery Available</p>
-                        <a href="#" class="primary-btn">SHOP NOW</a>
+                    @foreach($organics as $organic)
+                    <div class="hero__item set-bg mt-5" data-setbg="{{asset('storage/'.$organic->image)}}">
+                        <div class="hero__text">
+                            <span>{{$organic->title}}</span>
+                            <h2>{{$organic->text}}</h2>
+                            <p>{{$organic->description}}</p>
+                            <a href="{{$organic->url}}" class="primary-btn">SHOP NOW</a>
+                        </div>
                     </div>
-                </div>
+                    @endforeach
             </div>
         </div>
     </div>

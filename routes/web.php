@@ -3,7 +3,6 @@
 
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\BasketController;
 use App\Http\Controllers\Front\SiteController;
 use App\Http\Controllers\LoginController;
@@ -76,6 +75,7 @@ Route::get('order-delete/{id}',[OrderController::class,'delete'])->name('order.d
 Route::get('contact',[SiteController::class,'contact'])->name('contact');
 
 Route::post('message',[SiteController::class,'create'])->name('message');
+
 
 
 

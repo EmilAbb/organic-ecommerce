@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\ContactMapController;
 use App\Http\Controllers\Admin\ContactMessageController;
+use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Admin\OrganicController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductImageController;
 use App\Http\Controllers\Admin\TranslationController;
@@ -34,10 +36,17 @@ Route::group(['prefix' => 'admin','middleware' => 'admin-login'],function (){
     Route::get('attribute-value/{attribute}',[AttributeValueController::class,'index'])->name('attribute-value.index');
     Route::get('attribute-value/create/{attribute}',[AttributeValueController::class,'create'])->name('attribute-value.create');
 
+    //CONTACT
     Route::resource('contact',ContactController::class)->except('show');
 
     Route::resource('contact-map',ContactMapController::class)->except('show');
 
     Route::resource('contact-message',ContactMessageController::class)->except('show');
+
+   //ORGANIC
+    Route::resource('organic',OrganicController::class)->except('show');
+
+   //MENU
+    Route::resource('menu',MenuController::class)->except('show');
 
 });

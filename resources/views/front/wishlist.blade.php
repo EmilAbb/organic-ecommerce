@@ -142,11 +142,10 @@
                         <li><a href="#">Pages</a>
                             <ul class="header__menu__dropdown">
                                 <li><a href="#">Shop Details</a></li>
-                                <li><a href="{{route('basket')}}">Shoping Cart</a></li>
-                                <li><a href="./blog-details.html">Blog Details</a></li>
+
                             </ul>
                         </li>
-                        <li><a href="./blog.html">Blog</a></li>
+                        <li><a href="{{route('basket')}}">Shoping Cart</a></li>
                         <li><a href="{{route('contact')}}">Contact</a></li>
                     </ul>
                 </nav>
