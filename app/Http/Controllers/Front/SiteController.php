@@ -56,12 +56,14 @@ class SiteController extends Controller
 
     }
 
-    public function shop(CategoryService $categoryService, Product $product)
+    public function shop(CategoryService $categoryService, Product $product,AdminSettingsService $adminSettingsService,MenuService $menuService)
     {
+        $adminSettings = $adminSettingsService->cachedAdminSettings();
         $basket = $this->basketService->getCard(BasketType::BASKET);
         $products = Product::paginate(9);
         $categories = $categoryService->cachedCategories();
-        return view('front.shop', compact('categories', 'products', 'basket'));
+        $menus = $menuService->cachedMenu();
+        return view('front.shop', compact('categories', 'products', 'basket','adminSettings','menus'));
     }
 
     public function productDetail($slug)
@@ -72,7 +74,9 @@ class SiteController extends Controller
                 ->getLocale())->first();
         $products = Product::where('category_id', $product->category->id)->get();
         $avg_rating = round($product->reviews->pluck('rating')->avg(), 2);
-        return view('front.product', compact('product', 'products', 'avg_rating', 'basket'));
+        $adminSettings = $this->adminSettingsService->cachedAdminSettings();
+        $menus = $this->menuService->cachedMenu();
+        return view('front.product', compact('product', 'products', 'avg_rating', 'basket','adminSettings','menus'));
     }
 
     public function profile(User $user)
@@ -83,15 +87,18 @@ class SiteController extends Controller
         }
         $user = Auth::user();
         $orders = Order::where('user_id', auth()->guard(Guards::USER->value)->user()->id)->get();
-
-        return view('front.profile', compact('user', 'orders'));
+        $adminSettings = $this->adminSettingsService->cachedAdminSettings();
+        $menus = $this->menuService->cachedMenu();
+        return view('front.profile', compact('user', 'orders','menus','adminSettings'));
     }
 
     public function contact(ContactService $contactService, ContactMapService $contactMapService)
     {
         $contacts = $contactService->cachedContacts();
         $contactMaps = $contactMapService->cachedContactMap();
-        return view('front.contact', compact('contacts', 'contactMaps'));
+        $adminSettings = $this->adminSettingsService->cachedAdminSettings();
+        $menus = $this->menuService->cachedMenu();
+        return view('front.contact', compact('contacts', 'contactMaps','adminSettings','menus'));
     }
 
 

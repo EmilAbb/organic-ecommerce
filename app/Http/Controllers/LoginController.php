@@ -31,7 +31,7 @@ class LoginController extends Controller
     public function login()
     {
         if (auth()->attempt(['email'=>request()->email,'password'=>request()->password])){
-             return redirect()->route('profile')->with('success','login Successfully');
+            return redirect()->route('profile')->with('success','login Successfully');
         }
         return redirect()->back()->with('error','Login Error');
     }

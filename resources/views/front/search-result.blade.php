@@ -54,12 +54,15 @@
                             @endforeach
                         </div>
                         <div class="header__top__right__language">
-                            <img src="{{asset('assets/img/language.png')}}" alt="">
-                            <div>English</div>
+                            <div>{{app()->getLocale()}}</div>
                             <span class="arrow_carrot-down"></span>
                             <ul>
-                                <li><a href="#">Spanis</a></li>
-                                <li><a href="#">English</a></li>
+                                @foreach(config('app.languages') as $lang)
+                                    @if($lang !=app()->getLocale())
+                                        <li><a href="">{{$lang}}</a></li>
+                                    @endif
+
+                                @endforeach
                             </ul>
                         </div>
                         <div class="header__top__right__auth">

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Enums\BasketType;
 use App\Http\Requests\BasketRequest;
+use App\Services\AdminSettingsService;
 use App\Services\BasketService;
+use App\Services\MenuService;
 use App\Services\WishlistService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -12,7 +14,7 @@ use Illuminate\Support\Facades\Session;
 class BasketController extends Controller
 {
 
-    public function __construct(protected BasketService $basketService,protected WishlistService $wishlistService)
+    public function __construct(protected BasketService $basketService,protected WishlistService $wishlistService,protected AdminSettingsService $adminSettingsService,protected MenuService $menuService)
     {
     }
 
@@ -20,7 +22,9 @@ class BasketController extends Controller
     {
         $wishlist = $this->wishlistService->getCard(BasketType::WISHLIST);
         $basket = $this->basketService->getCard(BasketType::BASKET);
-       return view('front.card',compact('basket','wishlist'));
+        $adminSettings = $this->adminSettingsService->cachedAdminSettings();
+        $menus = $this->menuService->cachedMenu();
+       return view('front.card',compact('basket','wishlist','adminSettings','menus'));
     }
 
     public function addBasket(BasketRequest $basketRequest)

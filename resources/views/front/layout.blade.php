@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="token" content="{{csrf_token()}}">
-    <title>@yield('title')</title>
+    <title>Home</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
@@ -54,12 +54,15 @@
                           @endforeach
                         </div>
                         <div class="header__top__right__language">
-                            <img src="{{asset('assets/img/language.png')}}" alt="">
-                            <div>English</div>
+                            <div>{{app()->getLocale()}}</div>
                             <span class="arrow_carrot-down"></span>
                             <ul>
-                                <li><a href="#">Spanis</a></li>
-                                <li><a href="#">English</a></li>
+                              @foreach(config('app.languages') as $lang)
+                                  @if($lang !=app()->getLocale())
+                                        <li><a href="">{{$lang}}</a></li>
+                                  @endif
+
+                              @endforeach
                             </ul>
                         </div>
                         <div class="header__top__right__auth">
@@ -74,7 +77,9 @@
         <div class="row">
             <div class="col-lg-3">
                 <div class="header__logo">
-                    <a href="{{route('home-page')}}"><img src="{{asset('assets/img/logo.png')}}" alt=""></a>
+                    @foreach($adminSettings as $adminSetting)
+                        <a href="{{route('home-page')}}"><img src="{{asset('storage/'.$adminSetting->image)}}" alt=""></a>
+                    @endforeach
                 </div>
             </div>
             <div class="col-lg-6">
@@ -179,8 +184,9 @@
                 <div class="footer__widget">
                     <h6>Join Our Newsletter Now</h6>
                     <p>Get E-mail updates about our latest shop and special offers.</p>
-                    <form action="#">
-                        <input type="text" placeholder="Enter your mail">
+                    <form action="{{route('subscribe')}}" method="POST">
+                        @csrf
+                        <input type="email" name="email" placeholder="Enter your mail">
                         <button type="submit" class="site-btn">Subscribe</button>
                     </form>
                     <div class="footer__widget__social">

@@ -8,12 +8,19 @@ use App\Enums\OrderStatus;
 use App\Http\Requests\OrderRequest;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Services\AdminSettingsService;
 use App\Services\BasketService;
+use App\Services\MenuService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use voku\helper\ASCII;
 
 class OrderController extends Controller
 {
+    public function __construct(protected MenuService $menuService,protected AdminSettingsService $adminSettingsService)
+    {
+    }
+
     public function completeOrder(OrderRequest $orderRequest, BasketService $basketService)
     {
         if (!auth()->guard(Guards::USER->value)->check()) {
@@ -56,8 +63,10 @@ class OrderController extends Controller
 
     public function orderDetail($orderId)
     {
+        $adminSettings = $this->adminSettingsService->cachedAdminSettings();
+        $menus = $this->menuService->cachedMenu();
      $order = Order::where('user_id',auth()->guard(Guards::USER->value)->user()->id)->with('items.product.translations')->where('id',$orderId)->firstOrFail();
-     return view('front.order-products',compact('order'));
+     return view('front.order-products',compact('order','menus','adminSettings'));
     }
 
     public function delete($id)

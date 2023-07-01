@@ -5,9 +5,11 @@ use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\BasketController;
 use App\Http\Controllers\Front\SiteController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RatingController;
+use App\Http\Controllers\SubscribeController;
 use App\Http\Controllers\WishListController;
 use Illuminate\Support\Facades\Route;
 
@@ -53,7 +55,6 @@ Route::post('register',[LoginController::class,'register'])->name('register');
 
 Route::post('login',[LoginController::class,'login'])->name('login');
 
-
 Route::get('logout',[LoginController::class,'logout'])->name('logout');
 
 //FORGOT PASSWORD
@@ -81,12 +82,7 @@ Route::post('message',[SiteController::class,'create'])->name('message');
 Route::get('search',[ProductController::class,'search'])->name('search');
 
 
+//SUBSCRIBE
 
-
-
-
-
-
-
-
+Route::post('subscribe',[SubscribeController::class,'subscribe'])->name('subscribe');
 
