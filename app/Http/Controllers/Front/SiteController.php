@@ -12,10 +12,12 @@ use App\Models\Menu;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
+use App\Services\AdminSettingsService;
 use App\Services\BasketService;
 use App\Services\CategoryService;
 use App\Services\ContactMapService;
 use App\Services\ContactService;
+use App\Services\MenuService;
 use App\Services\OrganicService;
 use App\Services\ProductService;
 use App\Services\WishlistService;
@@ -25,7 +27,7 @@ use Illuminate\Support\Facades\Auth;
 class SiteController extends Controller
 {
 
-    public function __construct(protected BasketService $basketService, protected WishlistService $wishlistService,protected OrganicService $organicService)
+    public function __construct(protected BasketService $basketService, protected WishlistService $wishlistService,protected OrganicService $organicService,protected MenuService $menuService,protected AdminSettingsService $adminSettingsService)
     {
     }
 
@@ -35,8 +37,9 @@ class SiteController extends Controller
         $basket = $this->basketService->getCard(BasketType::BASKET);
         $organics = $this->organicService->cachedOrganic();
         $products = Product::paginate(10);
-        $menus = Menu::all();
-        return view('front.home', compact('basket', 'wishlist','organics','products','menus'));
+        $menus = $this->menuService->cachedMenu();
+        $adminSettings = $this->adminSettingsService->cachedAdminSettings();
+        return view('front.home', compact('basket', 'wishlist','organics','products','menus','adminSettings'));
     }
 
     public function getCategoryBySlug($slug)

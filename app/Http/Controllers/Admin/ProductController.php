@@ -5,9 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
+use App\Models\ProductTranslation;
+use App\Services\AdminSettingsService;
 use App\Services\CategoryService;
+use App\Services\MenuService;
+use App\Services\OrganicService;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
 {
@@ -59,5 +64,16 @@ class ProductController extends Controller
         $maxPrice = $request->input('max_price');
         $products = Product::whereBetween('price',[$minPrice , $maxPrice])->get();
         return view('components.products',compact('products'))->render();
+    }
+
+    public function search(Request $request, AdminSettingsService  $adminSettingsService,MenuService $menuService,OrganicService $organicService)
+    {
+        $menus = $menuService->cachedMenu();
+        $adminSettings = $adminSettingsService->cachedAdminSettings();
+       $query = $request->input('query');
+        $products = Product::whereHas('translations', function ($queryBuilder) use ($query) {
+            $queryBuilder->where('title', 'like', '%' . $query . '%');
+        })->get();
+       return view('front.search-result',compact('query','products','adminSettings','menus'));
     }
 }

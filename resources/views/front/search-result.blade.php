@@ -36,22 +36,22 @@
                 <div class="col-lg-6">
                     <div class="header__top__left">
                         <ul>
-                          @foreach($adminSettings as $adminSetting)
+                            @foreach($adminSettings as $adminSetting)
                                 <li><i class="fa fa-envelope"></i>{{$adminSetting->email}}</li>
                                 <li>{{$adminSetting->text}}</li>
-                          @endforeach
+                            @endforeach
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="header__top__right">
                         <div class="header__top__right__social">
-                          @foreach($adminSettings as $adminSetting)
+                            @foreach($adminSettings as $adminSetting)
                                 <a target="_blank" href="{{$adminSetting->facebook}}"><i class="fa fa-facebook"></i></a>
                                 <a target="_blank"  href="{{$adminSetting->twitter}}"><i class="fa fa-twitter"></i></a>
                                 <a target="_blank"  href="{{$adminSetting->linkedin}}"><i class="fa fa-linkedin"></i></a>
                                 <a target="_blank"  href="{{$adminSetting->pinterest}}"><i class="fa fa-pinterest-p"></i></a>
-                          @endforeach
+                            @endforeach
                         </div>
                         <div class="header__top__right__language">
                             <img src="{{asset('assets/img/language.png')}}" alt="">
@@ -105,6 +105,7 @@
         </div>
     </div>
 </header>
+
 <section class="hero hero-normal">
     <div class="container">
         <div class="row">
@@ -115,6 +116,7 @@
                 <div class="hero__search">
                     <div class="hero__search__form">
                         <form action="{{route('search')}}" method="GET">
+
                             <input type="text" name="query" placeholder="What do yo u need?">
                             <button type="submit"  class="site-btn">SEARCH</button>
                         </form>
@@ -124,35 +126,52 @@
                             <i class="fa fa-phone"></i>
                         </div>
                         <div class="hero__search__phone__text">
-                         @foreach($adminSettings as $adminSetting)
+                            @foreach($adminSettings as $adminSetting)
                                 <h5>{{$adminSetting->phone}}</h5>
                                 <span>{{$adminSetting->description}}</span>
-                         @endforeach
+                            @endforeach
                         </div>
                     </div>
                 </div>
-                    @foreach($organics as $organic)
-                    <div class="hero__item set-bg mt-5" data-setbg="{{asset('storage/'.$organic->image)}}">
-                        <div class="hero__text">
-                            <span>{{$organic->title}}</span>
-                            <h2>{{$organic->text}}</h2>
-                            <p>{{$organic->description}}</p>
-                            <a href="{{$organic->url}}" class="primary-btn">SHOP NOW</a>
-                        </div>
-                    </div>
-                    @endforeach
             </div>
         </div>
     </div>
 </section>
-@yield('content')
+
+<div class="container">
+    <h3 class="mt-4">Search Results: "{{ $query }}"</h3>
+
+
+        <div class="row my-5">
+            @foreach ($products as $product)
+                <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
+                    <div class="featured__item">
+                        <div class="featured__item__pic set-bg" data-setbg="{{asset('storage/'. $product->image)}}">
+                            <ul class="featured__item__pic__hover">
+                                <li><a class="add-to-wishlist" data-qty="1" data-id="{{$product->id}}" href=""><i class="fa fa-heart"></i></a></li>
+                                <li><a data-qty="1" class="add-to-shop"  data-id="{{$product->id}}" href=""><i class="fa fa-shopping-cart "></i></a></li>
+                            </ul>
+
+                        </div>
+                        <div class="featured__item__text">
+                            <h6><a  href="{{route('product.detail',$product->slug)}}">{{$product->title}}</a></h6>
+                            <h5>${{$product->price}}</h5>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+
+</div>
+
 
 
 <footer class="footer spad">
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-6">
-               @foreach($adminSettings as $adminSetting)
+                @foreach($adminSettings as $adminSetting)
                     <div class="footer__about">
                         <div class="footer__about__logo">
                             <a href="{{route('home-page')}}"><img src="{{asset('storage/'.$adminSetting->image)}}" alt=""></a>
@@ -163,15 +182,15 @@
                             <li>Email: {{$adminSetting->email}}</li>
                         </ul>
                     </div>
-               @endforeach
+                @endforeach
             </div>
             <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
                 <div class="footer__widget">
                     <h6>Useful Links</h6>
                     <ul>
-                       @foreach($menus as $menu)
+                        @foreach($menus as $menu)
                             <li><a href="{{$menu->url}}">{{$menu->title}}</a></li>
-                       @endforeach
+                        @endforeach
                     </ul>
                 </div>
             </div>
@@ -213,10 +232,67 @@
 <script src="{{asset('assets/js/jquery.slicknav.js')}}"></script>
 <script src="{{asset('assets/js/mixitup.min.js')}}"></script>
 <script src="{{asset('assets/js/owl.carousel.min.js')}}"></script>
+
 <script src="{{asset('assets/js/main.js')}}"></script>
+<script>
+    $(document).ready(function(){
+        $('.product-link').on('click',function (){
+            $.ajax({
+                method:'get',
+                url:"{{route('get-category-slug',['slug'])}}".replace('slug',$(this).attr("data-slug")),
+                success(response){
+                    $('#product-by-slug').html(response)
+                    // $('.select2').select2();
+                }
+            })
+        })
+    })
+</script>
+
+<script>
+    $(document).on('click','.add-to-shop',function (e){
+        e.preventDefault()
+        var $el = $(this)
+        $.ajax({
+            method:'POST',
+            url: "{{route('add.basket')}}",
+            data:{
+                _token: $('meta[name=token]').attr('content'),
+                qty:$el.attr('data-qty'),
+                product_id:$el.attr('data-id')
+            },
+            success(){
+                window.location.reload()
+            }
+
+
+        })
+    })
+
+    $(document).on('click','.add-to-wishlist',function (e){
+        e.preventDefault()
+        console.log(1)
+        // const qty = $(this).val()
+        // $('.add-to-shop').attr('data-qty',qty)
+        var $el = $(this)
+        $.ajax({
+            method:'POST',
+            url: "{{route('add.wishlist')}}",
+            data:{
+                _token: $('meta[name=token]').attr('content'),
+                qty:$el.attr('data-qty'),
+                product_id:$el.attr('data-id')
+            },
+            success(){
+                window.location.reload()
+            }
+
+
+        })
+    })
+</script>
 @stack('js')
 
 </body>
 
 </html>
-

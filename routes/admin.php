@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminSettingsController;
 use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\AttributeValueController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -48,5 +49,9 @@ Route::group(['prefix' => 'admin','middleware' => 'admin-login'],function (){
 
    //MENU
     Route::resource('menu',MenuController::class)->except('show');
+
+
+    //ADMIN SETTINGS
+    Route::resource('admin-settings',AdminSettingsController::class)->except('show');
 
 });

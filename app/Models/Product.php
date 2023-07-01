@@ -43,5 +43,10 @@ class Product extends Model implements TranslatableContract
         return $this->hasMany(Rating::class,'product_id','id');
     }
 
+    public function translations():HasMany
+    {
+        return $this->hasMany(ProductTranslation::class, 'product_id', 'id');
+    }
+
 
 }

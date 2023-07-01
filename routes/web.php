@@ -76,6 +76,10 @@ Route::get('contact',[SiteController::class,'contact'])->name('contact');
 
 Route::post('message',[SiteController::class,'create'])->name('message');
 
+//SEARCH
+
+Route::get('search',[ProductController::class,'search'])->name('search');
+
 
 
 

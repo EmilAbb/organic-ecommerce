@@ -122,6 +122,16 @@
     </a>
 </li>
 
+<li class="nav-item" style="border-radius: 20px">
+    <a href="{{route('admin-settings.index')}}"  class="nav-link">
+        <i class="nav-icon fas fa-star"></i>
+        <p style="color: #fff">
+            Admin Settings
+
+        </p>
+    </a>
+</li>
+
 
 
 
