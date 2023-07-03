@@ -423,7 +423,6 @@
                         max_price: ui.values[1]
                     },
                     success: function (response) {
-                        console.log(1)
                         $('#products-links').html(response)
                     },
                     error: function (xhr) {

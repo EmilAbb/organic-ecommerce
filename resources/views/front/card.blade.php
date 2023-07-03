@@ -88,8 +88,8 @@
                 </div>
             </div>
             <div class="col-lg-6">
-                <nav class="header__menu" style="width: 650px">
-                    <ul>
+                <nav class="header__menu">
+                    <ul style="margin-left: -82px">
                         @foreach($menus as $menu)
                             <li><a href="{{$menu->url}}">{{$menu->title}}</a></li>
                         @endforeach
@@ -100,7 +100,7 @@
                 <div class="header__cart">
                     <ul>
                         @if(auth()->check())
-                            <li><a href="{{route('profile')}}"><i class="fa fa-user"></i></a></li>
+                            <li><a href="{{route('profile')}}"><i  class="fa fa-user"></i></a></li>
                             <li> <a href="{{route('logout')}}"><i class="fa-solid fa-right-from-bracket"></i></a></li>
                         @endif
                         <li><a href="{{route('wishlist')}}"><i class="fa fa-heart"></i> <span>{{Cart::name('wishlist')->countItems()}}</span></a></li>
@@ -162,7 +162,17 @@
                             @endforeach
                             </tbody>
 
+
                         </table>
+                        <div class="row d-flex justify-content-between">
+                            <div class="col-lg-12">
+                                <div class="shoping__cart__btns">
+                                    <a href="{{route('shop.page')}}" class="primary-btn cart-btn my-5">CONTINUE SHOPPING</a>
+                                    <button style="border:none"  class="my-5 primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
+                                        Update Cart</button>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div class="col-lg-6" style="margin-left: 50px">
@@ -191,22 +201,14 @@
                             </ul>
 
                         </div>
-                        <div class="row d-flex justify-content-between">
-                            <div class="col-lg-12">
-                                <div class="shoping__cart__btns">
-                                    <a href="{{route('shop.page')}}" class="primary-btn cart-btn my-5">CONTINUE SHOPPING</a>
-                                    <button style="border:none"  class="my-5 primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
-                                        Upadate Cart</button>
-                                </div>
-                            </div>
-                        </div>
+
                     @endauth
                 </div>
             </div>
 
         </div>
 
-        </div>
+    </div>
 </section>
 
 

@@ -5,7 +5,6 @@ use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\BasketController;
 use App\Http\Controllers\Front\SiteController;
-use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RatingController;
@@ -49,6 +48,7 @@ Route::post('wishlist-update',[WishlistController::class,'updateWishlist'])->nam
 
 
 //LOGIN PAGE
+
 Route::get('login',[LoginController::class,'loginView'])->name('loginView.page');
 
 Route::post('register',[LoginController::class,'register'])->name('register');
@@ -58,6 +58,7 @@ Route::post('login',[LoginController::class,'login'])->name('login');
 Route::get('logout',[LoginController::class,'logout'])->name('logout');
 
 //FORGOT PASSWORD
+
 
 //Profile
 
