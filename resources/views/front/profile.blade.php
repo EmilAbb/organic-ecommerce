@@ -53,7 +53,6 @@
                             @endforeach
                         </div>
                         <div class="header__top__right__language">
-                            <img src="{{asset('assets/img/language.png')}}" alt="">
                             <div>{{app()->getLocale()}}</div>
                             <span class="arrow_carrot-down"></span>
                             <ul>
